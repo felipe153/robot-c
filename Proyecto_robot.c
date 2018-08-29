@@ -82,9 +82,16 @@ void rotar_derecha(int grados, int power_motor){//Funcion para el giro del robot
 	waitUntilMotorStop(rightMotor);
 	waitUntilMotorStop(leftMotor);
 }
+void rotar_izquierda(int grados, int power_motor){//Funcion para el giro del robot hacia la izquierda
+
+	moveMotorTarget(leftMotor, grados*-1, power_motor*-1);
+	moveMotorTarget(rightMotor,grados,power_motor);
+	waitUntilMotorStop(rightMotor);
+	waitUntilMotorStop(leftMotor);
+}
 
 task main(){//funcion principal
-		displayCenteredBigTextLine(3,"selecion.de.colores");
+		displayCenteredBigTextLine(3,"seleccion.de.colores");
 		sleep(2000);
 		displayCenteredBigTextLine(3,"color.nuestro/oponente");
 		sleep(2000);
@@ -92,7 +99,7 @@ task main(){//funcion principal
 		sleep(3500);
 		displayCenteredBigTextLine(5,"enter=rojo");
 		sleep(3500);
-		displayCenteredBigTextLine(8,"izq=vereficar");
+		displayCenteredBigTextLine(8,"izq=verificar");
 		sleep(3500);
 
 		if (getButtonPress(buttonEnter) ==1 && getButtonPress(buttonUp)==1){ // condiciones que diran el color a escojer que estaran dentro del menu
@@ -100,7 +107,7 @@ task main(){//funcion principal
 			while(true){
 				displayCenteredBigTextLine(3," ");
 				displayCenteredBigTextLine(5," ");// se limpia la pantalla para el buen funcionamiento del programa
-				displayCenteredBigTextLine(8," ");//
+				displayCenteredBigTextLine(8," ");
 				displayCenteredBigTextLine(10," ");
 
 
@@ -135,7 +142,7 @@ task main(){//funcion principal
 
 				}
 
-					if (color_white()&&(estadocolor!=colorWhite)){ // se define que si el robot detecta el color blanco, retrosedera, marca y avanzara
+					if (color_white()&&(estadocolor!=colorWhite)){ // se define que si el robot detecta el color blanco, retrocedera, marca y avanzara
 					avanzar(-20);
 					sleep(300);
 					brazoAbajo();
@@ -172,7 +179,30 @@ task main(){//funcion principal
 					displayCenteredBigTextLine(5," ");
 					displayCenteredBigTextLine(8," ");
 					displayCenteredBigTextLine(10," ");
+					// sentencias necesarias para que el robot analice el sector del macht y pueda dar una resultado de la partida
 					avanzar(3);
+					delay(10500);
+					rotar_izquierda(180,30);
+					delay(1000);
+					avanzar(3);
+					delay(3000);
+					rotar_izquierda(180,30);
+					avanzar(-3);
+					delay(8000);
+					avanzar(4);
+					delay(11000);
+					rotar_derecha(180,30);
+					delay(1000);
+					avanzar(3);
+					delay(3000);
+					rotar_derecha(170,40);
+					avanzar(-3);
+					delay(5000);
+					avanzar(3);
+					delay(11500);
+					break;
+					////////////////////////////////////////////////
+
 
 					if (color_Red()&&(estadocolor!=colorRed)){ // se define que si el robot detecta un color red, sabra que es nuestro color y lo mostrara por pantalla
 
@@ -191,7 +221,7 @@ task main(){//funcion principal
 					if (color_Blue()&&(estadocolor!=colorBlue)){ // se define que si el robot detecta un color blue, sabra que no es nuestro color y lo mostrara por pantalla
 
 					per=ga+1; // se le agrega un 1 al contador
-					displayCenteredBigTextLine(5,"Color nuestro");
+					displayCenteredBigTextLine(5,"Color oponente");
 					sleep(1000);
 					displayCenteredBigTextLine(5," ");
 
